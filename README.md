@@ -46,4 +46,16 @@ Because I don't want my Domain Controller IP address to be changing automaticall
 I connect to client-1 Virtual Machine through Remote Desk Connection and I will try to ping DC-1's address with a perpetual(-t) ping to see if there is a connection established. I see that the ping -t 10.0.0.4 is timeout probably because DC-1 Firewall is blocking ICMPv4 traffic
 ![image](https://github.com/danielbangm/configure-ad/assets/22795502/ed15f1ee-52a4-4fa3-9252-61e6c882e090)
 
-To solve this issue, I am going to log into DC-1 through Remote Desktop Connection using DC-1 Public IP address
+To solve this issue, I am going to log into DC-1 through Remote Desktop Connection using DC-1 Public IP address and enable ICMPv4 in the local Windows Firewall. Go to Windows Defender Firewall with advanced security -> Inbound Rules -> Protocol -> ICMPv4 -> Enable Rules.
+![image](https://github.com/danielbangm/configure-ad/assets/22795502/676ced27-4310-4f7b-b5f4-edbe460c3034)
+
+Now I going back to client-1 and notice that the ping -t 10.0.0.4 starts working after I enabled the firewall rules in DC-1
+![image](https://github.com/danielbangm/configure-ad/assets/22795502/039b13a5-9efa-4dbc-b5d5-d5923128c1ed)
+
+-  Step 4: Install Active Directory
+
+I log in to DC-1 and install Active Directory. Go to Server Manager -> Add Roles and Features -> Active Directory Domain Services -> Install
+![image](https://github.com/danielbangm/configure-ad/assets/22795502/cd87f549-b47c-43cb-9f26-df57d6c3fe81)
+
+Now I am going to promote this server as a Domain Controller and Setup a new forest as daniel.com. To do so I just click on the upper right conner of the previous snippet on that yellow triangle. When everything is done it automatically logs me out. Because DC-1 is now a Domain Controller, in order to log in I have to use a different username which is <b>daniel.com\labuser</b>
+
